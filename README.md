@@ -1,15 +1,15 @@
-### Overview
+## Overview
 
 jsDateFormat provides an extension for the Date prototype, which allows formatting the output based on a template.
 
-## Examples
+### Examples
     var oDate = new Date();
     alert(oDate.format('d M, yy'); // produces '2 December, 2013'
     alert(oDate.format('H:nn'); // produces '18:17'
 
 ***
 
-## Template strings
+#### Template strings
  *    yy - 4 digit representation of the year
  *    y - 2 digit representation of the year
  *    mm - digit representation of the month (with leading zeros)
@@ -31,6 +31,6 @@ jsDateFormat provides an extension for the Date prototype, which allows formatti
  *    j - 12 hour section lowercase (am/pm)
  *    J - 12 hour seciton uppercase (AM/PM)
 
-## Supported Localizations
+#### Supported Localizations
 en - English   
 es - Spanish
