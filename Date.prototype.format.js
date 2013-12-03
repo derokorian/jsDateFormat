@@ -1,15 +1,17 @@
 /**
+ * @name jsDateFormat
  * @description Returns a string representing the Date based on the given format string
- * @memberOf Date.prototype
- * @requires Array.prototype.indexOf
- * @param string strFormat The format of the returned date string, see options below
- * @param string strL18n The localization to use for text options [Supported: en]
- * @returns string The formatted date string
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
  * @version 1.0.0
  * @license The MIT License (MIT)
-
+ * 
+ * @memberOf Date.prototype
+ * @requires Array.prototype.indexOf
+ * @param string strFormat The format of the returned date string, see options below
+ * @param string strL18n The localization to use for text options [Supported: en, es]
+ * @returns string The formatted date string
+ *
  * @Copyright (c)2013 Ryan Pallas <ryan.pallas (at) gmail.com>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -38,10 +40,10 @@
  *    yy - 2 digit representation of the year
  *    mm - digit representation of the month (with leading zeros)
  *    m - digit representation of the month (without leading zeros)
- *    MM - full text name of the month (English only)
- *    M - short text name of the month (English only)
- *    DD - full text name of the day (English only)
- *    D - short text name of the day (English only)
+ *    MM - full text name of the month
+ *    M - short text name of the month
+ *    DD - full text name of the day
+ *    D - short text name of the day
  *    dd - digit representation of the month (with leading zeros)
  *    d - digit representation of the month (without leading zeros)
  *    HH - Hours in 24 hour format (with leading zeros)
@@ -56,20 +58,35 @@
  *    J - 12 hour seciton uppercase (AM/PM)
  *    
  * ToDo: support the following options:
- *    - Add Localizations
+ *    - More Localizations
  *    - More options
  */
 Date.prototype.format = function (strFormat, strL18n) {
     "use strict";
     strL18n = (strL18n === undefined) ? 'en' : strL18n;
-    var aMonths = {
+    var aMonth = {
             'en' : ['January', 'February', 'March', 'April', 'May',
                 'June', 'July', 'August', 'September', 'October',
-                'November', 'December']
+                'November', 'December'],
+            'es' : ['enero', 'febrero', 'marzo', 'abril', 'mayo',
+                'junio', 'julio', 'agosto', 'septiembre',
+                'octubre', 'noviembre', 'diciembre']
         },
-        aDays = {
+        aMonthAbbr = {
+            'en' : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
+                'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'es' : ['enero', 'feb', 'marzo', 'abr', 'mayo',
+                'jun', 'jul', 'agosto', 'set', 'oct', 'nov', 'dic']
+        },
+        aDay = {
             'en' : ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
-                'Thursday', 'Friday', 'Saturday']
+                'Thursday', 'Friday', 'Saturday'],
+            'es' : ['lunes','martes','miércoles','jueves',
+                'viernes','sábado','domingo']
+        },
+        aDayAbbr = {
+            'en' : ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'],
+            'es' : ['l', 'ma', 'mi', 'j', 'v', 's', 'd']
         },
         strRetVal = '',
         chPrev = '',
@@ -125,11 +142,11 @@ Date.prototype.format = function (strFormat, strL18n) {
                     case 'M':
                         if (iCharCount == 2)
                         {
-                            strRetVal += aMonths[strL18n][iMonth - 1];
+                            strRetVal += aMonth[strL18n][iMonth - 1];
                         }
                         else if (iCharCount == 1)
                         {
-                            strRetVal += aMonths[strL18n][iMonth - 1].substring(0,3);
+                            strRetVal += aMonthAbbr[strL18n][iMonth - 1];
                         }
                         else
                         {
@@ -153,21 +170,11 @@ Date.prototype.format = function (strFormat, strL18n) {
                     case 'D':
                         if (iCharCount == 2)
                         {
-                            strRetVal += aDays[strL18n][iDay];
+                            strRetVal += aDay[strL18n][iDay];
                         }
                         else if (iCharCount == 1)
                         {
-                            if ( strL18n == 'en' )
-                            {
-                                if ( [0,2,4,6].indexOf(iDay) > -1 )
-                                {
-                                    strRetVal += aDays[strL18n][iDay].substring(0,2);
-                                }
-                                else
-                                {
-                                    strRetVal += aDays[strL18n][iDay].substring(0,1);
-                                }
-                            }
+                            strRetVal += aDayAbbr[strL18n][iDay];
                         }
                         else
                         {
