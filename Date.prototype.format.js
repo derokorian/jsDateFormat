@@ -3,7 +3,7 @@
  * @description Returns a string representing the Date based on the given format string
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 1.1.0
+ * @version 1.1.1
  * @license The MIT License (MIT)
  * 
  * @memberOf Date.prototype
@@ -36,8 +36,8 @@
  *    NOTE: Options are currently not able to be supported without separators
  *    
  * Currently supported options (option are case sensitive):
- *    yyyy - 4 digit representation of the year
- *    yy - 2 digit representation of the year
+ *    yy - 4 digit representation of the year
+ *    y - 2 digit representation of the year
  *    mm - digit representation of the month (with leading zeros)
  *    m - digit representation of the month (without leading zeros)
  *    MM - full text name of the month
@@ -112,11 +112,11 @@ Date.prototype.format = function (strFormat, strL18n) {
                 switch(chPrev)
                 {
                     case 'y':
-                        if (iCharCount == 4)
+                        if (iCharCount == 2)
                         {
                             strRetVal += this.getFullYear();
                         }
-                        else if (iCharCount == 2)
+                        else if (iCharCount == 1)
                         {
                             strRetVal += this.getFullYear().toString().substring(2,4);
                         }
