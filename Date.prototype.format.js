@@ -3,7 +3,7 @@
  * @description Returns a string representing the Date based on the given format string
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 1.0.0
+ * @version 1.1.0
  * @license The MIT License (MIT)
  * 
  * @memberOf Date.prototype
