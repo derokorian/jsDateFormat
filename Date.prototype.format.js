@@ -62,7 +62,7 @@
  */
 Date.prototype.format = function (strFormat, strL18n) {
     "use strict";
-    // default to en if unsupported localization passed
+    // default to en if unsupported or no localization passed
     if ('en' !== strL18n && 'es' !== strL18n) {
         strL18n = 'en';
     }
