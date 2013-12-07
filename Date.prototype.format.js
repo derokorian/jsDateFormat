@@ -3,7 +3,7 @@
  * @description Returns a string representing the Date based on the given format string
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 1.1.2
+ * @version 1.1.3
  * @license The MIT License (MIT)
  *
  * @memberOf Date.prototype
@@ -55,6 +55,7 @@
  *    s - Seconds (without leading zeros)
  *    j - 12 hour section lowercase (am/pm)
  *    J - 12 hour seciton uppercase (AM/PM)
+ *    z - Timezone as offset from UTC
  *
  * ToDo: support the following options:
  *    - More Localizations
@@ -221,6 +222,24 @@ Date.prototype.format = function (strFormat, strL18n) {
                         }
                         else {
                             strRetVal += new Array(iCharCount + 1).join('J');
+                        }
+                        break;
+                    case 'z':
+                        if (iCharCount == 1) {
+                            var iTZMin = this.getTimezoneOffset();
+                            var bBehindUTC = true;
+                            if( iTZMin < 0 ) {
+                                iTZMin = Math.abs(iTZMin);
+                                bBehindUTC = false;
+                            }
+                            var iTZHr = iTZMin / 60;
+                            iTZMin = iTZMin % 60;
+                            strRetVal += (bBehindUTC ? '-' : '') +
+                                (iTZHr < 10 ? '0' : '') + iTZHr +
+                                (iTZMin < 10 ? '0' : '') + iTZMin;
+                        }
+                        else {
+                            strRetVal += new Array(iCharCount + 1).join('z');
                         }
                         break;
                     default:
