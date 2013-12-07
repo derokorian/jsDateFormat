@@ -3,7 +3,7 @@
  * @description Returns a string representing the Date based on the given format string
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 1.1.3
+ * @version 1.2.0
  * @license The MIT License (MIT)
  *
  * @memberOf Date.prototype
@@ -112,118 +112,94 @@ Date.prototype.format = function (strFormat, strL18n) {
                     case 'y':
                         if (iCharCount == 2) {
                             strRetVal += this.getFullYear();
+                            break;
                         }
                         else if (iCharCount == 1) {
                             strRetVal += this.getFullYear().toString().substring(2,4);
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join(chPrev);
-                        }
-                        break;
                     case 'm':
                         if (iCharCount == 2) {
                             strRetVal += (iMonth < 10 ? '0' : '') + iMonth;
+                            break;
                         }
                         else if (iCharCount == 1) {
                             strRetVal += iMonth;
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('m');
-                        }
-                        break;
                     case 'M':
                         if (iCharCount == 2) {
                             strRetVal += aMonth[strL18n][iMonth - 1];
+                            break;
                         }
                         else if (iCharCount == 1) {
                             strRetVal += aMonthAbbr[strL18n][iMonth - 1];
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('M');
-                        }
-                        break;
                     case 'd':
                         if (iCharCount == 2) {
                             strRetVal += (iDate < 10 ? '0' : '') + iDate;
+                            break;
                         }
                         else if (iCharCount == 1) {
                             strRetVal += iDate;
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('d');
-                        }
-                        break;
                     case 'D':
                         if (iCharCount == 2) {
                             strRetVal += aDay[strL18n][iDay];
+                            break;
                         }
                         else if (iCharCount == 1) {
                             strRetVal += aDayAbbr[strL18n][iDay];
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('D');
-                        }
-                        break;
                     case 'H':
                         if (iCharCount == 2) {
                             strRetVal += (iHrs < 10 ? '0' : '') + iHrs;
+                            break;
                         }
                         else if (iCharCount == 1) {
                             strRetVal += iHrs;
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('H');
-                        }
-                        break;
                     case 'h':
                         if (iCharCount == 2) {
                             strRetVal += (i12Hrs < 10 ? '0' : '') + i12Hrs;
+                            break;
                         }
                         else if (iCharCount == 1) {
                             strRetVal += i12Hrs;
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('h');
-                        }
-                        break;
                     case 'n':
                         if (iCharCount == 2) {
                             strRetVal += (iMin < 10 ? '0' : '') + iMin;
+                            break;
                         }
                         else if (iCharCount == 1) {
                             strRetVal += iMin;
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('n');
-                        }
-                        break;
                     case 's':
                         if (iCharCount == 2) {
                             strRetVal += (iSec < 10 ? '0' : '') + iSec;
+                            break;
                         }
                         else if (iCharCount == 1) {
                             strRetVal +=  iSec;
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('s');
-                        }
-                        break;
                     case 'j':
                         if (iCharCount == 1) {
                             strRetVal += iHrs > 0 && iHrs < 13 ? 'am' : 'pm';
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('j');
-                        }
-                        break;
                     case 'J':
                         if (iCharCount == 1) {
                             strRetVal += iHrs > 0 && iHrs < 13 ? 'AM' : 'PM';
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('J');
-                        }
-                        break;
                     case 'z':
                         if (iCharCount == 1) {
                             var iTZMin = this.getTimezoneOffset();
@@ -237,11 +213,8 @@ Date.prototype.format = function (strFormat, strL18n) {
                             strRetVal += (bBehindUTC ? '-' : '') +
                                 (iTZHr < 10 ? '0' : '') + iTZHr +
                                 (iTZMin < 10 ? '0' : '') + iTZMin;
+                            break;
                         }
-                        else {
-                            strRetVal += new Array(iCharCount + 1).join('z');
-                        }
-                        break;
                     default:
                         strRetVal += new Array(iCharCount + 1).join(chPrev);
                 }
