@@ -30,6 +30,7 @@ jsDateFormat provides an extension for the Date prototype, which allows formatti
  *    s - Seconds (without leading zeros)
  *    j - 12 hour section lowercase (am/pm)
  *    J - 12 hour seciton uppercase (AM/PM)
+ *    z - Timezone as offset from UTC
 
 #### Supported Localizations
 en - English   
