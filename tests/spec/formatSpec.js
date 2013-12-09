@@ -2,7 +2,7 @@ describe("Format", function() {
     var oDate;
     
     beforeEach(function() {
-        oDate = new Date('2012-04-04T19:05:07.117');
+        oDate = new Date('2012-04-04T19:05:07.117-0600');
     });
     
     it('checks the year options', function(){
