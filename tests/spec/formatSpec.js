@@ -5,6 +5,10 @@ describe("Format", function() {
         oDate = new Date('2012-04-04T19:05:07.117-0600');
     });
     
+    it('verifies format as a method of date', function() {
+        expect(typeof oDate.format).toBe('function');
+    })
+    
     it('checks the year options', function(){
         expect(oDate.format('yy')).toEqual('2012');
         expect(oDate.format('y')).toEqual('12');
