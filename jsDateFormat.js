@@ -94,7 +94,7 @@ Date.prototype.jsDateFormat = {
     setLocalization: function(strLocalization) {
         if (that.localizations.supported.indexOf(strLocalization) > -1) {
             that.localization = strLocalization;
-        } else if(typeof that.localization === 'undefined') {
+        } else if(that.localizations.supported.indexOf(that.localization) = -1) {
             that.localization = that.localizations.default;
         }
     },
