@@ -2,7 +2,9 @@ describe("Format", function() {
     var oDate;
     
     beforeEach(function() {
-        oDate = new Date('2012-04-04T19:05:07.117-0600');
+        var tz = new Date().getTimezoneOffset() - 60;
+        var strDate = '2012-04-04T19:05:07.117' + DateTZtoOffset(tz);
+        oDate = new Date(strDate);
     });
     
     it('verifies format as a method of date', function() {
@@ -60,7 +62,11 @@ describe("Format", function() {
     });
     
     it('checks the timezone option', function() {
-        var iTZMin = oDate.getTimezoneOffset();
+        expect(oDate.format('z')).toEqual(DateTZtoOffset(oDate.getTimezoneOffset()));
+    });
+    
+    function DateTZtoOffset(dtz) {
+        var iTZMin = dtz;
         var bBehindUTC = true;
         if ( iTZMin < 0 ) {
             bBehindUTC = false;
@@ -70,6 +76,6 @@ describe("Format", function() {
         iTZMin = iTZMin % 60;
         iTZHr = (iTZHr < 10 ? '0' : '') + iTZHr;
         iTZMin = (iTZMin < 10 ? '0' : '') + iTZMin;
-        expect(oDate.format('z')).toEqual((bBehindUTC ? '-' : '') + iTZHr + iTZMin);
-    });
+        return (bBehindUTC ? '-' : '') + iTZHr + iTZMin;
+    }
 });
