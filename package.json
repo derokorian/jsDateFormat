@@ -1,5 +1,32 @@
 {
-    "scripts": {
-        "test": "jasmine-node tests/spec/"
-    }
+  "name": "jsDateFormat",
+  "version": "1.2.0",
+  "description": "Date object extension to provide formatting output",
+  "contributors": [
+    "Ryan Pallas <derokorian@gmail.com>"
+  ],
+  "homepage": "https://github.com/derokorian/jsDateFormat",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/derokorian/jsDateFormat.git"
+  },
+  "keywords": [
+    "javascript",
+    "dates",
+    "format"
+  ],
+  "author": "Ryan Pallas <derokorian@gmail.com>",
+  "maintainers": [
+    "Ryan Pallas <derokorian@gmail.com>"
+  ],
+  "licenses": [
+    "MIT"
+  ],
+  "bin": "bin/jasmine-node",
+  "preferGlobal": true,
+  "main": "lib/jasmine-node",
+  "scripts": {
+    "test": "jasmine-node tests/spec/"
+  },
+  "devDependencies": {}
 }
