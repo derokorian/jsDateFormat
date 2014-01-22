@@ -5,7 +5,7 @@ describe("Format", function() {
         
         if( typeof oDate.format == 'undefined' ) {
             fs = require('fs');
-            myCode = fs.readFileSync('~/build/derokorian/jsDateFormat/Date.prototype.format.js','utf-8');
+            myCode = fs.readFileSync('/home/travis/build/derokorian/jsDateFormat/Date.prototype.format.js','utf-8');
             eval(myCode);
         }
     });
