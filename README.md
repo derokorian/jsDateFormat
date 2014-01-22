@@ -2,8 +2,6 @@
 
 jsDateFormat provides an extension for the Date prototype, which allows formatting the output based on a template.
 
-[![Build Status](https://travis-ci.org/derokorian/jsDateFormat.png?branch=master)](https://travis-ci.org/derokorian/jsDateFormat)
-
 ### Examples
     var oDate = new Date();
     alert(oDate.format('d M, yy'); // produces '2 December, 2013'
