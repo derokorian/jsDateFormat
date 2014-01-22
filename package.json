@@ -26,7 +26,7 @@
   "preferGlobal": true,
   "main": "lib/jasmine-node",
   "scripts": {
-    "test": "jasmine-node tests/spec/cli/"
+    "test": "jasmine-node tests/cli/"
   },
   "devDependencies": {}
 }
