@@ -1,3 +1,5 @@
-"scripts": {
-    "test": "jasmine-node tests/spec/"
+{
+    "scripts": {
+        "test": "jasmine-node tests/spec/"
+    }
 }
