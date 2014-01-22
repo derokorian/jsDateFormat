@@ -2,9 +2,10 @@ describe("Format", function() {
     var oDate;
     beforeEach(function() {
         oDate = new Date('2012-04-04T19:05:07.117-0600');
+        
         if( typeof oDate.format == 'undefined' ) {
             fs = require('fs');
-            myCode = fs.readFileSync('./color.js','utf-8'); // depends on the file encoding
+            myCode = fs.readFileSync('../../Date.prototype.format.js','utf-8');
             eval(myCode);
         }
     });
