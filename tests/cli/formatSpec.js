@@ -83,6 +83,6 @@ describe("Format", function() {
         iTZMin = iTZMin % 60;
         iTZHr = (iTZHr < 10 ? '0' : '') + iTZHr;
         iTZMin = (iTZMin < 10 ? '0' : '') + iTZMin;
-        return (bBehindUTC ? '-' : '') + iTZHr + iTZMin;
+        return (bBehindUTC ? '-' : '+') + iTZHr + iTZMin;
     }
 });

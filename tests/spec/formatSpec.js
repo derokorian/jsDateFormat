@@ -1,4 +1,4 @@
-describe("Format", function() {
+describe("format", function() {
     var oDate;
     
     beforeEach(function() {
@@ -7,7 +7,7 @@ describe("Format", function() {
         oDate = new Date(strDate);
     });
     
-    it('verifies format as a method of date', function() {
+    it('exists as a method of date', function() {
         expect(typeof oDate.format).toBe('function');
     })
     
@@ -76,6 +76,6 @@ describe("Format", function() {
         iTZMin = iTZMin % 60;
         iTZHr = (iTZHr < 10 ? '0' : '') + iTZHr;
         iTZMin = (iTZMin < 10 ? '0' : '') + iTZMin;
-        return (bBehindUTC ? '-' : '') + iTZHr + iTZMin;
+        return (bBehindUTC ? '-' : '+') + iTZHr + iTZMin;
     }
 });
