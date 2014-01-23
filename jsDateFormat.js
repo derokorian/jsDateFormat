@@ -1,9 +1,10 @@
 /**
  * @name jsDateFormat
+ * 
  * @description Returns a string representing the Date based on the given format string
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 1.3beta.0
+ * @version 2.0.0-alpha.1
  * @license The MIT License (MIT)
  *
  * @memberOf Date.prototype
@@ -100,13 +101,13 @@ Date.prototype.jsDateFormat = {
     },
     getTZ: function(iTZMin) {
         var bBehindUTC = true;
-        if( iTZMin < 0 ) {
+        if( iTZMin <= 0 ) {
             iTZMin = Math.abs(iTZMin);
             bBehindUTC = false;
         }
         var iTZHr = iTZMin / 60;
         iTZMin = iTZMin % 60;
-        return (bBehindUTC ? '-' : '') +
+        return (bBehindUTC ? '-' : '+') +
             (iTZHr < 10 ? '0' : '') + iTZHr +
             (iTZMin < 10 ? '0' : '') + iTZMin;
     }
@@ -244,7 +245,11 @@ Date.prototype.format = function (strFormat) {
 
     return strRetVal;
 };
-
+Date.parseFormat = function(strValue, strFormat) {
+    var oDate = new Date();
+    // parseFormat here
+    return oDate;
+};
 
 
 
