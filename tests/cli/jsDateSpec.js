@@ -1,5 +1,5 @@
 describe('jsDate built-ins', function() {
-    var oDate;
+    
     beforeEach(function() {
         if( typeof Date.prototype.jsDateFormat == 'undefined' ) {
             fs = require('fs');
