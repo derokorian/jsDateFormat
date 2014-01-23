@@ -8,7 +8,7 @@ describe("Format", function() {
         if( typeof oDate.format == 'undefined' ) {
             fs = require('fs');
             // ToDo: figure out why relative paths did not work, relying on a specific location may not be safe
-            myCode = fs.readFileSync('/home/travis/build/derokorian/jsDateFormat/Date.prototype.format.js','utf-8');
+            myCode = fs.readFileSync('/home/travis/build/derokorian/jsDateFormat/jsDateFormat.js','utf-8');
             eval(myCode);
         }
     });

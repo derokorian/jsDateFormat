@@ -2,7 +2,7 @@
 
 jsDateFormat provides an extension for the Date prototype, which allows formatting the output based on a template.
 
-[![Build Status](https://travis-ci.org/derokorian/jsDateFormat.png?branch=master)](https://travis-ci.org/derokorian/jsDateFormat)
+[![Build Status](https://travis-ci.org/derokorian/jsDateFormat.png?branch=master.Issue3)](https://travis-ci.org/derokorian/jsDateFormat)
 
 ### Examples
     var oDate = new Date();

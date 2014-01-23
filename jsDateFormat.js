@@ -3,7 +3,7 @@
  * @description Returns a string representing the Date based on the given format string
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 1.2.1
+ * @version 1.3beta.0
  * @license The MIT License (MIT)
  *
  * @memberOf Date.prototype
@@ -11,7 +11,7 @@
  * @param string strL18n The localization to use for text options [Supported: en, es] [Default: en]
  * @returns string The formatted date string
  *
- * @Copyright (c)2013 Ryan Pallas <ryan.pallas (at) gmail.com>
+ * @Copyright (c)2013-2014 Ryan Pallas <ryan.pallas (at) gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

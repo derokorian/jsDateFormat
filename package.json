@@ -1,6 +1,6 @@
 {
   "name": "jsDateFormat",
-  "version": "1.2.0",
+  "version": "1.3alpha.0",
   "description": "Date object extension to provide formatting output",
   "contributors": [
     "Ryan Pallas <derokorian@gmail.com>"
