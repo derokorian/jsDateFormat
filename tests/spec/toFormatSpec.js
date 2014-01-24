@@ -4,7 +4,7 @@ describe("toFormat", function() {
     beforeEach(function() {
         f = Date.prototype.jsDateFormat.getTZ;
         var tz = new Date().getTimezoneOffset() - 60;
-        var strDate = '2012-04-04T19:05:07.117' + f(tz);
+        var strDate = '2012-04-04T19:05:07.007' + f(tz);
         oDate = new Date(strDate);
     });
     
@@ -55,6 +55,11 @@ describe("toFormat", function() {
     it('checks the second options', function() {
         expect(oDate.toFormat('ss')).toEqual('07');
         expect(oDate.toFormat('s')).toEqual('7');
+    });
+        
+    xit('checks the millisecond options', function() {
+        expect(oDate.toFormat('uu')).toEqual('007');
+        expect(oDate.toFormat('u')).toEqual('7');
     });
     
     it('checks the am/pm options', function() {

@@ -108,111 +108,38 @@ Date.prototype.jsDateFormat = {
             (iTZHr < 10 ? '0' : '') + iTZHr +
             (iTZMin < 10 ? '0' : '') + iTZMin;
     },
-    getFunc: function(str, cnt, read) {
+    getFunc: function(str, read) {
+        var strRetVal = read ? 'get' : 'set';
         switch(str) {
             case 'y':
-                if (cnt == 2) {
-                    strRetVal += this.getFullYear();
-                    break;
-                }
-                else if (cnt == 1) {
-                    strRetVal += this.getFullYear().toString().substring(2,4);
-                    break;
-                }
+                strRetVal += 'FullYear';
+                break;
             case 'm':
-                if (cnt == 2) {
-                    strRetVal += (iMonth < 10 ? '0' : '') + iMonth;
-                    break;
-                }
-                else if (cnt == 1) {
-                    strRetVal += iMonth;
-                    break;
-                }
             case 'M':
-                if (cnt == 2) {
-                    strRetVal += this.jsDateFormat.localizations.
-                        Months[strLoc][iMonth - 1];
-                    break;
-                }
-                else if (cnt == 1) {
-                    strRetVal += this.jsDateFormat.localizations.
-                        MonthAbbr[strLoc][iMonth - 1];
-                    break;
-                }
+                strRetVal += 'Month';
+                break;
             case 'd':
-                if (cnt == 2) {
-                    strRetVal += (iDate < 10 ? '0' : '') + iDate;
-                    break;
-                }
-                else if (cnt == 1) {
-                    strRetVal += iDate;
-                    break;
-                }
+                strRetVal += 'Date';
+                break;
             case 'D':
-                if (cnt == 2) {
-                    strRetVal += this.jsDateFormat.localizations.
-                        Days[strLoc][iDay];
-                    break;
-                }
-                else if (cnt == 1) {
-                    strRetVal += this.jsDateFormat.localizations.
-                        DayAbbr[strLoc][iDay];
-                    break;
-                }
+                strRetVal += 'Day';
+                break;
             case 'H':
-                if (cnt == 2) {
-                    strRetVal += (iHrs < 10 ? '0' : '') + iHrs;
-                    break;
-                }
-                else if (cnt == 1) {
-                    strRetVal += iHrs;
-                    break;
-                }
             case 'h':
-                if (cnt == 2) {
-                    strRetVal += (i12Hrs < 10 ? '0' : '') + i12Hrs;
-                    break;
-                }
-                else if (cnt == 1) {
-                    strRetVal += i12Hrs;
-                    break;
-                }
-            case 'n':
-                if (cnt == 2) {
-                    strRetVal += (iMin < 10 ? '0' : '') + iMin;
-                    break;
-                }
-                else if (cnt == 1) {
-                    strRetVal += iMin;
-                    break;
-                }
-            case 's':
-                if (cnt == 2) {
-                    strRetVal += (iSec < 10 ? '0' : '') + iSec;
-                    break;
-                }
-                else if (cnt == 1) {
-                    strRetVal +=  iSec;
-                    break;
-                }
             case 'j':
-                if (cnt == 1) {
-                    strRetVal += iHrs > 0 && iHrs < 13 ? 'am' : 'pm';
-                    break;
-                }
             case 'J':
-                if (cnt == 1) {
-                    strRetVal += iHrs > 0 && iHrs < 13 ? 'AM' : 'PM';
-                    break;
-                }
-            case 'z':
-                if (cnt == 1) {
-                    strRetVal += jsd.getTZ(this.getTimezoneOffset());
-                    break;
-                }
+                strRetVal += 'Hours';
+                break;
+            case 'n':
+                strRetVal += 'Minutes';
+                break;
+            case 's':
+                strRetVal += 'Seconds';
+                break;
             default:
-                strRetVal += new Array(cnt + 1).join(chPrev);
+                strRetVal = '';
         }
+        return strRetVal;
     }
 };
 
@@ -241,6 +168,7 @@ Date.prototype.toFormat = function(strFormat) {
         chPrev = '',
         iCharCount = 0,
         i,
+        mVal,
         iMonth = this.getMonth() + 1,
         iDate = this.getDate(),
         iDay = this.getDay(),
@@ -254,6 +182,10 @@ Date.prototype.toFormat = function(strFormat) {
         }
         else {
             if( chPrev != '' ) {
+                var f = jsd.getFunc(chPrev, true);
+                if ( typeof this[f] == 'function') {
+                    mVal = this[f]();
+                }
                 switch(chPrev) {
                     case 'y':
                         if (iCharCount == 2) {
