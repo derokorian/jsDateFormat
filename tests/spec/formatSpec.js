@@ -1,13 +1,14 @@
-describe("Format", function() {
-    var oDate;
+describe("format", function() {
+    var oDate, f;
     
     beforeEach(function() {
+        f = Date.prototype.jsDateFormat.getTZ;
         var tz = new Date().getTimezoneOffset() - 60;
-        var strDate = '2012-04-04T19:05:07.117' + DateTZtoOffset(tz);
+        var strDate = '2012-04-04T19:05:07.117' + f(tz);
         oDate = new Date(strDate);
     });
     
-    it('verifies format as a method of date', function() {
+    it('exists as a method of date', function() {
         expect(typeof oDate.format).toBe('function');
     })
     
@@ -62,20 +63,6 @@ describe("Format", function() {
     });
     
     it('checks the timezone option', function() {
-        expect(oDate.format('z')).toEqual(DateTZtoOffset(oDate.getTimezoneOffset()));
+        expect(oDate.format('z')).toEqual(f(oDate.getTimezoneOffset()));
     });
-    
-    function DateTZtoOffset(dtz) {
-        var iTZMin = dtz;
-        var bBehindUTC = true;
-        if ( iTZMin < 0 ) {
-            bBehindUTC = false;
-            iTZMin = Math.abs(iTZMin);
-        }
-        var iTZHr = Math.floor(iTZMin / 60);
-        iTZMin = iTZMin % 60;
-        iTZHr = (iTZHr < 10 ? '0' : '') + iTZHr;
-        iTZMin = (iTZMin < 10 ? '0' : '') + iTZMin;
-        return (bBehindUTC ? '-' : '') + iTZHr + iTZMin;
-    }
 });

@@ -1,16 +1,18 @@
 describe("Format", function() {
-    var oDate;
+    var oDate, f;
+    
     beforeEach(function() {
-        var tz = new Date().getTimezoneOffset() - 60;
-        var strDate = '2012-04-04T19:05:07.117' + DateTZtoOffset(tz);
-        oDate = new Date(strDate);
-        
-        if( typeof oDate.format == 'undefined' ) {
+        if( typeof Date.prototype.jsDateFormat == 'undefined' ) {
             fs = require('fs');
             // ToDo: figure out why relative paths did not work, relying on a specific location may not be safe
-            myCode = fs.readFileSync('/home/travis/build/derokorian/jsDateFormat/Date.prototype.format.js','utf-8');
+            myCode = fs.readFileSync('/home/travis/build/derokorian/jsDateFormat/jsDateFormat.js','utf-8');
             eval(myCode);
         }
+        
+        f = Date.prototype.jsDateFormat.getTZ;
+        var tz = new Date().getTimezoneOffset();
+        var strDate = '2012-04-04T19:05:07.117' + f(tz);
+        oDate = new Date(strDate);
     });
     
     it('verifies format as a method of date', function() {
@@ -67,22 +69,7 @@ describe("Format", function() {
         expect(oDate.format('J')).toEqual('PM');
     });
     
-    
     it('checks the timezone option', function() {
-        expect(oDate.format('z')).toEqual(DateTZtoOffset(oDate.getTimezoneOffset()));
+        expect(oDate.format('z')).toEqual(f(oDate.getTimezoneOffset()));
     });
-    
-    function DateTZtoOffset(dtz) {
-        var iTZMin = dtz;
-        var bBehindUTC = true;
-        if ( iTZMin < 0 ) {
-            bBehindUTC = false;
-            iTZMin = Math.abs(iTZMin);
-        }
-        var iTZHr = Math.floor(iTZMin / 60);
-        iTZMin = iTZMin % 60;
-        iTZHr = (iTZHr < 10 ? '0' : '') + iTZHr;
-        iTZMin = (iTZMin < 10 ? '0' : '') + iTZMin;
-        return (bBehindUTC ? '-' : '') + iTZHr + iTZMin;
-    }
 });

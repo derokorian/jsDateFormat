@@ -1,9 +1,10 @@
 /**
  * @name jsDateFormat
+ * 
  * @description Returns a string representing the Date based on the given format string
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 1.2.0
+ * @version 2.0.0-alpha.1
  * @license The MIT License (MIT)
  *
  * @memberOf Date.prototype
@@ -11,7 +12,7 @@
  * @param string strL18n The localization to use for text options [Supported: en, es] [Default: en]
  * @returns string The formatted date string
  *
- * @Copyright (c)2013 Ryan Pallas <ryan.pallas (at) gmail.com>
+ * @Copyright (c)2013-2014 Ryan Pallas <ryan.pallas (at) gmail.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -61,13 +62,12 @@
  *    - More Localizations
  *    - More options
  */
-Date.prototype.format = function (strFormat, strL18n) {
-    "use strict";
-    // default to en if unsupported or no localization passed
-    if ('en' !== strL18n && 'es' !== strL18n) {
-        strL18n = 'en';
-    }
-    var aMonth = {
+Date.prototype.jsDateFormat = {
+    that: this,
+    localizations: {
+        'default': 'en',
+        supported: ['en','es'],
+        Months: {
             'en' : ['January', 'February', 'March', 'April', 'May',
                 'June', 'July', 'August', 'September', 'October',
                 'November', 'December'],
@@ -75,23 +75,48 @@ Date.prototype.format = function (strFormat, strL18n) {
                 'junio', 'julio', 'agosto', 'septiembre',
                 'octubre', 'noviembre', 'diciembre']
         },
-        aMonthAbbr = {
+        MonthAbbr: {
             'en' : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
                 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             'es' : ['enero', 'feb', 'marzo', 'abr', 'mayo',
                 'jun', 'jul', 'agosto', 'set', 'oct', 'nov', 'dic']
         },
-        aDay = {
+        Days: {
             'en' : ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
                 'Thursday', 'Friday', 'Saturday'],
             'es' : ['lunes','martes','miércoles','jueves',
                 'viernes','sábado','domingo']
         },
-        aDayAbbr = {
+        DayAbbr: {
             'en' : ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'],
             'es' : ['l', 'ma', 'mi', 'j', 'v', 's', 'd']
-        },
-        strRetVal = '',
+        }
+    },
+    setLocalization: function(strLocalization) {
+        if (that.localizations.supported.indexOf(strLocalization) > -1) {
+            that.localization = strLocalization;
+        } else if(that.localizations.supported.indexOf(that.localization) = -1) {
+            that.localization = that.localizations.default;
+        }
+    },
+    getTZ: function(iTZMin) {
+        var bBehindUTC = true;
+        if( iTZMin <= 0 ) {
+            iTZMin = Math.abs(iTZMin);
+            bBehindUTC = false;
+        }
+        var iTZHr = iTZMin / 60;
+        iTZMin = iTZMin % 60;
+        return (bBehindUTC ? '-' : '+') +
+            (iTZHr < 10 ? '0' : '') + iTZHr +
+            (iTZMin < 10 ? '0' : '') + iTZMin;
+    }
+}
+Date.prototype.format = function (strFormat) {
+    // init jsDateFormat
+    var jsd = this.jsDateFormat,
+        strLoc = jsd.localization || jsd.localizations['default'];
+    var strRetVal = '',
         chPrev = '',
         iCharCount = 0,
         i,
@@ -129,11 +154,13 @@ Date.prototype.format = function (strFormat, strL18n) {
                         }
                     case 'M':
                         if (iCharCount == 2) {
-                            strRetVal += aMonth[strL18n][iMonth - 1];
+                            strRetVal += this.jsDateFormat.localizations.
+                                Months[strLoc][iMonth - 1];
                             break;
                         }
                         else if (iCharCount == 1) {
-                            strRetVal += aMonthAbbr[strL18n][iMonth - 1];
+                            strRetVal += this.jsDateFormat.localizations.
+                                MonthAbbr[strLoc][iMonth - 1];
                             break;
                         }
                     case 'd':
@@ -147,11 +174,13 @@ Date.prototype.format = function (strFormat, strL18n) {
                         }
                     case 'D':
                         if (iCharCount == 2) {
-                            strRetVal += aDay[strL18n][iDay];
+                            strRetVal += this.jsDateFormat.localizations.
+                                Days[strLoc][iDay];
                             break;
                         }
                         else if (iCharCount == 1) {
-                            strRetVal += aDayAbbr[strL18n][iDay];
+                            strRetVal += this.jsDateFormat.localizations.
+                                DayAbbr[strLoc][iDay];
                             break;
                         }
                     case 'H':
@@ -202,17 +231,7 @@ Date.prototype.format = function (strFormat, strL18n) {
                         }
                     case 'z':
                         if (iCharCount == 1) {
-                            var iTZMin = this.getTimezoneOffset();
-                            var bBehindUTC = true;
-                            if( iTZMin < 0 ) {
-                                iTZMin = Math.abs(iTZMin);
-                                bBehindUTC = false;
-                            }
-                            var iTZHr = iTZMin / 60;
-                            iTZMin = iTZMin % 60;
-                            strRetVal += (bBehindUTC ? '-' : '') +
-                                (iTZHr < 10 ? '0' : '') + iTZHr +
-                                (iTZMin < 10 ? '0' : '') + iTZMin;
+                            strRetVal += jsd.getTZ(this.getTimezoneOffset());
                             break;
                         }
                     default:
@@ -226,3 +245,16 @@ Date.prototype.format = function (strFormat, strL18n) {
 
     return strRetVal;
 };
+Date.parseFormat = function(strValue, strFormat) {
+    var oDate = new Date();
+    // parseFormat here
+    return oDate;
+};
+
+
+
+
+
+
+
+
