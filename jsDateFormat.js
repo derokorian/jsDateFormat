@@ -169,127 +169,82 @@ Date.prototype.toFormat = function(strFormat) {
         iCharCount = 0,
         i,
         mVal,
-        iMonth = this.getMonth() + 1,
-        iDate = this.getDate(),
-        iDay = this.getDay(),
-        iHrs = this.getHours(),
-        i12Hrs = (iHrs + 11) % 12 + 1,
-        iMin = this.getMinutes(),
-        iSec = this.getSeconds();
+        f;
     for ( i = 0; i <= strFormat.length; i++) {
         if (strFormat.charAt(i) == chPrev) {
             iCharCount++;
         }
         else {
             if( chPrev != '' ) {
-                var f = jsd.getFunc(chPrev, true);
+                f = jsd.getFunc(chPrev, true);
                 if ( typeof this[f] == 'function') {
                     mVal = this[f]();
                 }
-                switch(chPrev) {
-                    case 'y':
-                        if (iCharCount == 2) {
-                            strRetVal += this.getFullYear();
-                            break;
-                        }
-                        else if (iCharCount == 1) {
-                            strRetVal += this.getFullYear().toString().substring(2,4);
-                            break;
-                        }
-                    case 'm':
-                        if (iCharCount == 2) {
-                            strRetVal += (iMonth < 10 ? '0' : '') + iMonth;
-                            break;
-                        }
-                        else if (iCharCount == 1) {
-                            strRetVal += iMonth;
-                            break;
-                        }
-                    case 'M':
-                        if (iCharCount == 2) {
-                            strRetVal += this.jsDateFormat.localizations.
-                                Months[strLoc][iMonth - 1];
-                            break;
-                        }
-                        else if (iCharCount == 1) {
-                            strRetVal += this.jsDateFormat.localizations.
-                                MonthAbbr[strLoc][iMonth - 1];
-                            break;
-                        }
-                    case 'd':
-                        if (iCharCount == 2) {
-                            strRetVal += (iDate < 10 ? '0' : '') + iDate;
-                            break;
-                        }
-                        else if (iCharCount == 1) {
-                            strRetVal += iDate;
-                            break;
-                        }
-                    case 'D':
-                        if (iCharCount == 2) {
-                            strRetVal += this.jsDateFormat.localizations.
-                                Days[strLoc][iDay];
-                            break;
-                        }
-                        else if (iCharCount == 1) {
-                            strRetVal += this.jsDateFormat.localizations.
-                                DayAbbr[strLoc][iDay];
-                            break;
-                        }
-                    case 'H':
-                        if (iCharCount == 2) {
-                            strRetVal += (iHrs < 10 ? '0' : '') + iHrs;
-                            break;
-                        }
-                        else if (iCharCount == 1) {
-                            strRetVal += iHrs;
-                            break;
-                        }
-                    case 'h':
-                        if (iCharCount == 2) {
-                            strRetVal += (i12Hrs < 10 ? '0' : '') + i12Hrs;
-                            break;
-                        }
-                        else if (iCharCount == 1) {
-                            strRetVal += i12Hrs;
-                            break;
-                        }
-                    case 'n':
-                        if (iCharCount == 2) {
-                            strRetVal += (iMin < 10 ? '0' : '') + iMin;
-                            break;
-                        }
-                        else if (iCharCount == 1) {
-                            strRetVal += iMin;
-                            break;
-                        }
-                    case 's':
-                        if (iCharCount == 2) {
-                            strRetVal += (iSec < 10 ? '0' : '') + iSec;
-                            break;
-                        }
-                        else if (iCharCount == 1) {
-                            strRetVal +=  iSec;
-                            break;
-                        }
-                    case 'j':
-                        if (iCharCount == 1) {
-                            strRetVal += iHrs > 0 && iHrs < 13 ? 'am' : 'pm';
-                            break;
-                        }
-                    case 'J':
-                        if (iCharCount == 1) {
-                            strRetVal += iHrs > 0 && iHrs < 13 ? 'AM' : 'PM';
-                            break;
-                        }
-                    case 'z':
-                        if (iCharCount == 1) {
-                            strRetVal += jsd.getTZ(this.getTimezoneOffset());
-                            break;
-                        }
-                    default:
-                        strRetVal += new Array(iCharCount + 1).join(chPrev);
+                if ( chPrev == 'h' ) {
+                    mVal = (mVal + 11) % 12 + 1;
                 }
+                if (
+                    (iCharCount == 2 && chPrev == 'y') ||
+                    (iCharCount == 1 && 'dHnsh'.indexOf(chPrev) > -1)
+                ) {
+                    strRetVal += mVal;
+                } else if ( iCharCount == 2 && 'mdHnsh'.indexOf(chPrev) > -1 ) {
+                    mVal += chPrev == 'm' ? 1 : 0;
+                    strRetVal += (mVal < 10 ? '0' : '') + mVal;
+                } else {
+                    switch(chPrev) {
+                        case 'y':
+                            if (iCharCount == 1) {
+                                strRetVal += mVal.toString().substring(2,4);
+                                break;
+                            }
+                        case 'm':
+                            if (iCharCount == 1) {
+                                mVal++;
+                                strRetVal += mVal;
+                                break;
+                            }
+                        case 'M':
+                            if (iCharCount == 2) {
+                                strRetVal += this.jsDateFormat.localizations.
+                                    Months[strLoc][mVal];
+                                break;
+                            }
+                            else if (iCharCount == 1) {
+                                strRetVal += this.jsDateFormat.localizations.
+                                    MonthAbbr[strLoc][mVal];
+                                break;
+                            }
+                        case 'D':
+                            if (iCharCount == 2) {
+                                strRetVal += this.jsDateFormat.localizations.
+                                    Days[strLoc][mVal];
+                                break;
+                            }
+                            else if (iCharCount == 1) {
+                                strRetVal += this.jsDateFormat.localizations.
+                                    DayAbbr[strLoc][mVal];
+                                break;
+                            }
+                        case 'j':
+                            if (iCharCount == 1) {
+                                strRetVal += mVal > 0 && mVal < 13 ? 'am' : 'pm';
+                                break;
+                            }
+                        case 'J':
+                            if (iCharCount == 1) {
+                                strRetVal += mVal > 0 && mVal < 13 ? 'AM' : 'PM';
+                                break;
+                            }
+                        case 'z':
+                            if (iCharCount == 1) {
+                                strRetVal += jsd.getTZ(this.getTimezoneOffset());
+                                break;
+                            }
+                        default:
+                            strRetVal += new Array(iCharCount + 1).join(chPrev);
+                    }
+                } 
             }
             chPrev = strFormat.charAt(i);
             iCharCount = 1;
