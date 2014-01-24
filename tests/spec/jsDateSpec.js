@@ -17,9 +17,6 @@ describe('jsDateFormat', function() {
     it('extends Date', function() {
         expect(Date.prototype.format).toBeDefined();
         expect(typeof Date.prototype.format).toEqual('function');
-        
-        expect(Date.parseFormat).toBeDefined();
-        expect(typeof Date.parseFormat).toEqual('function');
     });
     
     it('parses timezones correctly', function() {
