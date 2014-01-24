@@ -1,4 +1,4 @@
-describe("format", function() {
+describe("toFormat", function() {
     var oDate, f;
     
     beforeEach(function() {
@@ -15,61 +15,61 @@ describe("format", function() {
         oDate = new Date(strDate);
     });
     
-    it('verifies format as a method of date', function() {
-        expect(typeof oDate.format).toBe('function');
+    it('exists as a method of date', function() {
+        expect(typeof oDate.toFormat).toBe('function');
     })
     
     it('checks the year options', function(){
-        expect(oDate.format('yy')).toEqual('2012');
-        expect(oDate.format('y')).toEqual('12');
+        expect(oDate.toFormat('yy')).toEqual('2012');
+        expect(oDate.toFormat('y')).toEqual('12');
     });
     
     it('checks the month (numeric) options', function() {
-        expect(oDate.format('mm')).toEqual('04');
-        expect(oDate.format('m')).toEqual('4');
+        expect(oDate.toFormat('mm')).toEqual('04');
+        expect(oDate.toFormat('m')).toEqual('4');
     });
     
     it('checks the month (text - english) options', function() {
-        expect(oDate.format('MM')).toEqual('April');
-        expect(oDate.format('M')).toEqual('Apr');
+        expect(oDate.toFormat('MM')).toEqual('April');
+        expect(oDate.toFormat('M')).toEqual('Apr');
     });
     
     it('checks the day (numeric) options', function () {
-        expect(oDate.format('dd')).toEqual('04');
-        expect(oDate.format('d')).toEqual('4');
+        expect(oDate.toFormat('dd')).toEqual('04');
+        expect(oDate.toFormat('d')).toEqual('4');
     });
     
     it('checks the day (text - english) options', function () {
-        expect(oDate.format('DD')).toEqual('Wednesday');
-        expect(oDate.format('D')).toEqual('W');
+        expect(oDate.toFormat('DD')).toEqual('Wednesday');
+        expect(oDate.toFormat('D')).toEqual('W');
     });
     
     it('checks the hour (24H) options', function () {
-        expect(oDate.format('HH')).toEqual('19');
-        expect(oDate.format('H')).toEqual('19');
+        expect(oDate.toFormat('HH')).toEqual('19');
+        expect(oDate.toFormat('H')).toEqual('19');
     });
     
     it('checks the hour (12H) options', function () {
-        expect(oDate.format('hh')).toEqual('07');
-        expect(oDate.format('h')).toEqual('7');
+        expect(oDate.toFormat('hh')).toEqual('07');
+        expect(oDate.toFormat('h')).toEqual('7');
     });
     
     it('checks the minute options', function() {
-        expect(oDate.format('nn')).toEqual('05');
-        expect(oDate.format('n')).toEqual('5');
+        expect(oDate.toFormat('nn')).toEqual('05');
+        expect(oDate.toFormat('n')).toEqual('5');
     });
     
     it('checks the second options', function() {
-        expect(oDate.format('ss')).toEqual('07');
-        expect(oDate.format('s')).toEqual('7');
+        expect(oDate.toFormat('ss')).toEqual('07');
+        expect(oDate.toFormat('s')).toEqual('7');
     });
     
     it('checks the am/pm options', function() {
-        expect(oDate.format('j')).toEqual('pm');
-        expect(oDate.format('J')).toEqual('PM');
+        expect(oDate.toFormat('j')).toEqual('pm');
+        expect(oDate.toFormat('J')).toEqual('PM');
     });
     
     it('checks the timezone option', function() {
-        expect(oDate.format('z')).toEqual(f(oDate.getTimezoneOffset()));
+        expect(oDate.toFormat('z')).toEqual(f(oDate.getTimezoneOffset()));
     });
 });

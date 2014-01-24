@@ -6,8 +6,9 @@ jsDateFormat provides an extension for the Date prototype, which allows formatti
 
 ### Examples
     var oDate = new Date();
-    alert(oDate.format('d M, yy'); // produces '2 December, 2013'
-    alert(oDate.format('H:nn'); // produces '18:17'
+    alert(oDate.toFormat('d M, yy'); // produces '2 December, 2013'
+    alert(oDate.toFormat('H:nn'); // produces '18:17'
+    oDate = Date.fromFormat('18:17', 'H:nn'); // Produces an object set to today's date and 18:17 for time.
 
 ***
 

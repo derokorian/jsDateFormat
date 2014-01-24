@@ -1,16 +1,12 @@
 /**
  * @name jsDateFormat
- * 
- * @description Returns a string representing the Date based on the given format string
+ * @memberOf Date.prototype
+ * @description provides functionality to control formatting with a Date object
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 2.0.0-alpha.1
+ * @version 2.0.0-alpha.2
  * @license The MIT License (MIT)
  *
- * @memberOf Date.prototype
- * @param string strFormat The format of the returned date string, see options below
- * @param string strL18n The localization to use for text options [Supported: en, es] [Default: en]
- * @returns string The formatted date string
  *
  * @Copyright (c)2013-2014 Ryan Pallas <ryan.pallas (at) gmail.com>
  *
@@ -35,28 +31,29 @@
  * Options are provided in a string, to represent the desired output
  *    NOTE: Options are not able to be repeated without separators
  *
- * Currently supported options (option are case sensitive):
- *    yy - 4 digit representation of the year
- *    y - 2 digit representation of the year
- *    mm - digit representation of the month (with leading zeros)
- *    m - digit representation of the month (without leading zeros)
- *    MM - full text name of the month
- *    M - short text name of the month
- *    DD - full text name of the day
- *    D - short text name of the day
- *    dd - digit representation of the month (with leading zeros)
- *    d - digit representation of the month (without leading zeros)
- *    HH - Hours in 24 hour format (with leading zeros)
- *    H - Hours in 24 hour format (without leading zeros)
- *    hh - Hours in 12 hour format (with leading zeros)
- *    h - hours in 12 hour format (without leading zeros)
- *    nn - Minutes (with leading zeros)
- *    n - Minutes (without leading zeros)
- *    ss - Seconds (with leading zeros)
- *    s - Seconds (without leading zeros)
- *    j - 12 hour section lowercase (am/pm)
- *    J - 12 hour seciton uppercase (AM/PM)
- *    z - Timezone as offset from UTC
+ * Current formatting options (option are case sensitive):
+ * toFormat fromFormat Option
+ *   [x]       [ ]     yy - 4 digit representation of the year
+ *   [x]       [ ]     y - 2 digit representation of the year
+ *   [x]       [ ]     mm - digit representation of the month (with leading zeros)
+ *   [x]       [ ]     m - digit representation of the month (without leading zeros)
+ *   [x]       [ ]     MM - full text name of the month
+ *   [x]       [ ]     M - short text name of the month
+ *   [x]       [ ]     DD - full text name of the day
+ *   [x]       [ ]     D - short text name of the day
+ *   [x]       [ ]     dd - digit representation of the month (with leading zeros)
+ *   [x]       [ ]     d - digit representation of the month (without leading zeros)
+ *   [x]       [ ]     HH - Hours in 24 hour format (with leading zeros)
+ *   [x]       [ ]     H - Hours in 24 hour format (without leading zeros)
+ *   [x]       [ ]     hh - Hours in 12 hour format (with leading zeros)
+ *   [x]       [ ]     h - hours in 12 hour format (without leading zeros)
+ *   [x]       [ ]     nn - Minutes (with leading zeros)
+ *   [x]       [ ]     n - Minutes (without leading zeros)
+ *   [x]       [ ]     ss - Seconds (with leading zeros)
+ *   [x]       [ ]     s - Seconds (without leading zeros)
+ *   [x]       [ ]     j - 12 hour section lowercase (am/pm)
+ *   [x]       [ ]     J - 12 hour seciton uppercase (AM/PM)
+ *   [x]       [ ]     z - Timezone as offset from UTC
  *
  * ToDo: support the following options:
  *    - More Localizations
@@ -95,7 +92,7 @@ Date.prototype.jsDateFormat = {
     setLocalization: function(strLocalization) {
         if (that.localizations.supported.indexOf(strLocalization) > -1) {
             that.localization = strLocalization;
-        } else if(that.localizations.supported.indexOf(that.localization) = -1) {
+        } else if(that.localizations.supported.indexOf(that.localization) == -1) {
             that.localization = that.localizations.default;
         }
     },
@@ -217,9 +214,27 @@ Date.prototype.jsDateFormat = {
                 strRetVal += new Array(cnt + 1).join(chPrev);
         }
     }
-}
+};
+
+/**
+ * @name format
+ * @memberOf Date.prototype
+ * @deprecated since v2.0.0 - use toFormat instead
+ * @param string strFormat The format of the returned date string
+ * @returns string The formatted date string
+ */
 Date.prototype.format = function (strFormat) {
-    // init jsDateFormat
+    return this.toFormat(strFormat);
+};
+
+/**
+ * @name toFormat
+ * @memberOf Date.prototype
+ * @param string strFormat The format of the returned date string
+ * @returns string The formatted date string
+ */
+Date.prototype.toFormat = function(strFormat) {
+        // init jsDateFormat
     var jsd = this.jsDateFormat,
         strLoc = jsd.localization || jsd.localizations['default'];
     var strRetVal = '',
@@ -351,7 +366,15 @@ Date.prototype.format = function (strFormat) {
 
     return strRetVal;
 };
-Date.parseFormat = function(strValue, strFormat) {
+
+/**
+ * @name fromFormat
+ * @memberOf Date
+ * @param string strValue A string representing a Date and/or time
+ * @param string strFormat The format of the date string
+ * @returns Date The date object, whose values are set to what was passed in
+ */
+Date.fromFormat = function(strValue, strFormat) {
     var oDate = new Date();
     // parseFormat here
     return oDate;
