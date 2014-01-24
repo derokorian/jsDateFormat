@@ -4,7 +4,7 @@
  * @description Returns a string representing the Date based on the given format string
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 2.0.0-alpha.1
+ * @version 1.4.0
  * @license The MIT License (MIT)
  *
  * @memberOf Date.prototype
@@ -84,8 +84,8 @@ Date.prototype.jsDateFormat = {
         Days: {
             'en' : ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
                 'Thursday', 'Friday', 'Saturday'],
-            'es' : ['lunes','martes','miércoles','jueves',
-                'viernes','sábado','domingo']
+            'es' : ['lunes','martes','miï¿½rcoles','jueves',
+                'viernes','sï¿½bado','domingo']
         },
         DayAbbr: {
             'en' : ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'],
@@ -244,11 +244,6 @@ Date.prototype.format = function (strFormat) {
     }
 
     return strRetVal;
-};
-Date.parseFormat = function(strValue, strFormat) {
-    var oDate = new Date();
-    // parseFormat here
-    return oDate;
 };
 
 
