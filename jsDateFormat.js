@@ -81,8 +81,8 @@ Date.prototype.jsDateFormat = {
         Days: {
             'en' : ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
                 'Thursday', 'Friday', 'Saturday'],
-            'es' : ['lunes','martes','miércoles','jueves',
-                'viernes','sábado','domingo']
+            'es' : ['lunes','martes','miï¿½rcoles','jueves',
+                'viernes','sï¿½bado','domingo']
         },
         DayAbbr: {
             'en' : ['Su', 'M', 'Tu', 'W', 'Th', 'F', 'Sa'],
