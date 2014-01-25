@@ -408,7 +408,22 @@ Date.fromFormat = function(strValue, strFormat) {
                                 break;
                             }
                         }
+                    case 'J':
+                    case 'j':
+                        mVal = strValue.substr(0,2).toLowerCase();
+                        strValue = strValue.substr(2);
+                        if ( mVal == 'pm' && oDate.getHours() < 12 ) {
+                            oDate.setHours(oDate.getHours() + 12);
+                            break;
+                        } else if ( mVal == 'am' && oDate.getHours() > 11 ) {
+                            oDate.setHours(oDate.getHours() - 12);
+                            break;
+                        }
+                    default:
+                        strValue = strValue.substr(iCharCount);
                 }
+            } else {
+                strValue = strValue.substr(iCharCount);
             }
             chPrev = strFormat.charAt(i);
             iCharCount = 1;
