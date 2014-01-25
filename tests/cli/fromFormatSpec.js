@@ -68,7 +68,7 @@ describe('fromFormat', function() {
     
     it('can set the seconds', function() {
         d = Date.fromFormat('07', 'ss');
-        expect(d.toFormat('s')).toEqual('07');
+        expect(d.toFormat('ss')).toEqual('07');
         
         d = Date.fromFormat('25', 's');
         expect(d.toFormat('s')).toEqual('25');

@@ -4,7 +4,7 @@
  * @description provides functionality to control formatting with a Date object
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 2.0.0-beta.1
+ * @version 2.0.0
  * @license The MIT License (MIT)
  *
  *
@@ -41,18 +41,18 @@
  *   [x]       [x]     M - short text name of the month
  *   [x]       [ ]     DD - full text name of the day
  *   [x]       [ ]     D - short text name of the day
- *   [x]       [ ]     dd - digit representation of the month (with leading zeros)
- *   [x]       [ ]     d - digit representation of the month (without leading zeros)
- *   [x]       [ ]     HH - Hours in 24 hour format (with leading zeros)
- *   [x]       [ ]     H - Hours in 24 hour format (without leading zeros)
- *   [x]       [ ]     hh - Hours in 12 hour format (with leading zeros)
- *   [x]       [ ]     h - hours in 12 hour format (without leading zeros)
- *   [x]       [ ]     nn - Minutes (with leading zeros)
- *   [x]       [ ]     n - Minutes (without leading zeros)
- *   [x]       [ ]     ss - Seconds (with leading zeros)
- *   [x]       [ ]     s - Seconds (without leading zeros)
- *   [x]       [ ]     j - 12 hour section lowercase (am/pm)
- *   [x]       [ ]     J - 12 hour seciton uppercase (AM/PM)
+ *   [x]       [x]     dd - digit representation of the month (with leading zeros)
+ *   [x]       [x]     d - digit representation of the month (without leading zeros)
+ *   [x]       [x]     HH - Hours in 24 hour format (with leading zeros)
+ *   [x]       [x]     H - Hours in 24 hour format (without leading zeros)
+ *   [x]       [x]     hh - Hours in 12 hour format (with leading zeros)
+ *   [x]       [x]     h - hours in 12 hour format (without leading zeros)
+ *   [x]       [x]     nn - Minutes (with leading zeros)
+ *   [x]       [x]     n - Minutes (without leading zeros)
+ *   [x]       [x]     ss - Seconds (with leading zeros)
+ *   [x]       [x]     s - Seconds (without leading zeros)
+ *   [x]       [x]     j - 12 hour section lowercase (am/pm)
+ *   [x]       [x]     J - 12 hour seciton uppercase (AM/PM)
  *   [x]       [ ]     z - Timezone as offset from UTC
  *
  * ToDo: support the following options:
@@ -282,145 +282,81 @@ Date.fromFormat = function(strValue, strFormat) {
         else {
             f = jsd.getFunc(chPrev, 'write');
             if( chPrev != '' && typeof oDate[f] == 'function' ) {
-                switch (chPrev) {
-                    case 'y':
-                        if( iCharCount == 2 ) {
-                            mVal = strValue.substr(0,4);
-                            strValue = strValue.substr(4);
-                            oDate[f](mVal);
-                            break;
-                        } else if ( iCharCount == 1 ) {
-                            mVal = strValue.substr(0,2);
-                            strValue = strValue.substr(2);
-                            if( mVal < 30 )
-                                mVal = '20' + mVal;
-                            else
-                                mVal = '19' + mVal;
-                            oDate[f](mVal);
-                            break;
-                        }
-                    case 'm':
-                        if ( iCharCount == 2 ) {
-                            mVal = parseInt(strValue.substr(0,2), 10) - 1;
-                            strValue = strValue.substr(2);
-                            oDate[f](mVal);
-                            break;
-                        } else if ( iCharCount == 1 ) {
-                            mVal = parseInt(strValue.substr(0,2), 10);
-                            if ( mVal == 10 || mVal == 11 || mVal == 12 ) {
-                                strValue = strValue.substr(2);
-                            } else {
-                                mVal = parseInt(strValue.substr(0,1), 10) - 1;
-                                strValue = strValue.substr(1);
+                if ( (iCharCount == 1 && chPrev == 'y') ||
+                     (iCharCount == 2 && 'mdhHns'.indexOf(chPrev) > -1)
+                ) {
+                    mVal = parseInt(strValue.substr(0,2), 10) - (chPrev == 'm' ? 1 : 0);
+                    strValue = strValue.substr(2);
+                    if ( chPrev == 'y' ) {
+                        if( mVal < 30 )
+                            mVal = '20' + mVal;
+                        else
+                            mVal = '19' + mVal;
+                    }
+                    oDate[f](mVal);
+                } else if ( iCharCount == 1 && 'mdhHns'.indexOf(chPrev) > -1 ) {
+                    mVal = null;
+                    if ( 'mh'.indexOf(chPrev) > -1 ) {
+                        mVal = strValue.match(/^1[0-2]|[1-9]/);
+                    } else if ( chPrev == 'd' ) {
+                        mVal = strValue.match(/^3[0-1]|[1-2][0-9]|[0-9]/);
+                    } else if ( chPrev == 'H' ) {
+                        mVal = strValue.match(/^2[0-3]|1[0-9]|[0-9]/);
+                    } else {
+                        mVal = strValue.match(/^[1-5][0-9]|[0-9]/);
+                    }
+                    strValue = strValue.substr(mVal.length);
+                    if ( chPrev == 'm' ) {
+                        mVal--;
+                    }
+                    oDate[f](mVal);
+                } else {
+                    switch (chPrev) {
+                        case 'y':
+                            if( iCharCount == 2 ) {
+                                mVal = parseInt(strValue.substr(0,4), 10);
+                                strValue = strValue.substr(4);
+                                oDate[f](mVal);
+                                break;
                             }
-                            oDate[f](mVal);
-                            break;
-                        }
-                    case 'M':
-                        if ( iCharCount == 2 || iCharCount == 1 ) {
-                            var re, mo;
-                            mVal = '';
-                            for( var i = 0; i < 12; i++ ) {
-                                if ( iCharCount == 2 ) {
-                                    mo = jsd.localizations.Months[strLoc][i];
-                                } else {
-                                    mo = jsd.localizations.MonthAbbr[strLoc][i];
+                        case 'M':
+                            if ( iCharCount == 2 || iCharCount == 1 ) {
+                                var re, mo;
+                                mVal = '';
+                                for( var i = 0; i < 12; i++ ) {
+                                    if ( iCharCount == 2 ) {
+                                        mo = jsd.localizations.Months[strLoc][i];
+                                    } else {
+                                        mo = jsd.localizations.MonthAbbr[strLoc][i];
+                                    }
+                                    re = new RegExp("^" + mo);
+                                    if ( strValue.match(re)) {
+                                        mVal = i;
+                                        strValue = strValue.substr(mo.length);
+                                        break;
+                                    }
                                 }
-                                re = new RegExp("^" + mo);
-                                if ( strValue.match(re)) {
-                                    mVal = i;
-                                    strValue = strValue.substr(mo.length);
+                                if ( mVal != '' ) {
+                                    oDate[f](mVal);
                                     break;
                                 }
                             }
-                            if ( mVal != '' ) {
-                                oDate[f](mVal);
-                                break;
+                        case 'J':
+                        case 'j':
+                            if ( iCharCount == 1 ) {
+                                mVal = strValue.substr(0,2).toLowerCase();
+                                strValue = strValue.substr(2);
+                                if ( mVal == 'pm' && oDate.getHours() < 12 ) {
+                                    oDate.setHours(oDate.getHours() + 12);
+                                    break;
+                                } else if ( mVal == 'am' && oDate.getHours() > 11 ) {
+                                    oDate.setHours(oDate.getHours() - 12);
+                                    break;
+                                }
                             }
-                        }
-                    case 'd':
-                        if ( iCharCount == 2 ) {
-                            mVal = parseInt(strValue.substr(0,2), 10);
-                            strValue = strValue.substr(2);
-                            oDate[f](mVal);
-                            break;
-                        } else if ( iCharCount == 1 ) {
-                            mVal = strValue.match(/^3[0-1]|[1-2][0-9]|[0-9]/);
-                            if ( mVal !== null ) {
-                                strVal = strValue.substr(mVal.length);
-                                oDate[f](mVal);
-                                break;
-                            }
-                        }
-                    case 'H':
-                        if ( iCharCount == 2 ) {
-                            mVal = parseInt(strValue.substr(0,2), 10);
-                            strValue = strValue.substr(2);
-                            oDate[f](mVal);
-                            break;
-                        } else if ( iCharCount == 1 ) {
-                            mVal = strValue.match(/^2[0-3]|1[0-9]|[0-9]/);
-                            if ( mVal !== null ) {
-                                strValue = strValue.substr(mVal.length);
-                                oDate[f](mVal);
-                                break;
-                            }
-                        }
-                    case 'h':
-                        if ( iCharCount == 2 ) {
-                            mVal = parseInt(strValue.substr(0,2), 10);
-                            strValue = strValue.substr(2);
-                            oDate[f](mVal);
-                            break;
-                        } else if ( iCharCount == 1 ) {
-                            mVal = strValue.match(/^1[0-2]|[1-9]/);
-                            if ( mVal !== null ) {
-                                strValue = strValue.substr(mVal.length);
-                                oDate[f](mVal);
-                                break;
-                            }
-                        }
-                    case 'n':
-                        if ( iCharCount == 2 ) {
-                            mVal = parseInt(strValue.substr(0,2), 10);
-                            strValue = strValue.substr(2);
-                            oDate[f](mVal);
-                            break;
-                        } else if ( iCharCount == 1 ) {
-                            mVal = strValue.match(/^[1-5][0-9]|[0-9]/);
-                            if ( mVal !== null ) {
-                                strValue = strValue.substr(mVal.length);
-                                oDate[f](mVal);
-                                break;
-                            }
-                        }
-                    case 's':
-                        if ( iCharCount == 2 ) {
-                            mVal = parseInt(strValue.substr(0,2), 10);
-                            strValue = strValue.substr(2);
-                            oDate[f](mVal);
-                            break;
-                        } else if ( iCharCount == 1 ) {
-                            mVal = strValue.match(/^[1-5][0-9]|[0-9]/);
-                            if ( mVal !== null ) {
-                                strValue = strValue.substr(mVal.length);
-                                oDate[f](mVal);
-                                break;
-                            }
-                        }
-                    case 'J':
-                    case 'j':
-                        mVal = strValue.substr(0,2).toLowerCase();
-                        strValue = strValue.substr(2);
-                        if ( mVal == 'pm' && oDate.getHours() < 12 ) {
-                            oDate.setHours(oDate.getHours() + 12);
-                            break;
-                        } else if ( mVal == 'am' && oDate.getHours() > 11 ) {
-                            oDate.setHours(oDate.getHours() - 12);
-                            break;
-                        }
-                    default:
-                        strValue = strValue.substr(iCharCount);
+                        default:
+                            strValue = strValue.substr(iCharCount);
+                    }
                 }
             } else {
                 strValue = strValue.substr(iCharCount);
