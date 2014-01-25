@@ -35,10 +35,10 @@
  * toFormat fromFormat Option
  *   [x]       [x]     yy - 4 digit representation of the year
  *   [x]       [x]     y - 2 digit representation of the year
- *   [x]       [ ]     mm - digit representation of the month (with leading zeros)
- *   [x]       [ ]     m - digit representation of the month (without leading zeros)
- *   [x]       [ ]     MM - full text name of the month
- *   [x]       [ ]     M - short text name of the month
+ *   [x]       [x]     mm - digit representation of the month (with leading zeros)
+ *   [x]       [x]     m - digit representation of the month (without leading zeros)
+ *   [x]       [x]     MM - full text name of the month
+ *   [x]       [x]     M - short text name of the month
  *   [x]       [ ]     DD - full text name of the day
  *   [x]       [ ]     D - short text name of the day
  *   [x]       [ ]     dd - digit representation of the month (with leading zeros)
@@ -298,6 +298,43 @@ Date.fromFormat = function(strValue, strFormat) {
                                 mVal = '19' + mVal;
                             oDate[f](mVal);
                             break;
+                        }
+                    case 'm':
+                        if ( iCharCount == 2 ) {
+                            mVal = parseInt(strValue.substr(0,2), 10) - 1;
+                            strValue = strValue.substr(2);
+                            oDate[f](mVal);
+                            break;
+                        } else if ( iCharCount == 1 ) {
+                            mVal = parseInt(strValue.substr(0,2), 10);
+                            if ( mVal == 10 || mVal == 11 || mVal == 12 ) {
+                                strValue = strValue.substr(2);
+                            } else {
+                                mVal = parseInt(strValue.substr(0,1), 10) - 1;
+                                strValue = strValue.substr(1);
+                            }
+                            oDate[f](mVal);
+                            break;
+                        }
+                    case 'M':
+                        if ( iCharCount == 2 || iCharCount == 1 ) {
+                            var re, mo;
+                            mVal = '';
+                            for( var i = 0; i < 12; i++ ) {
+                                if ( iCharCount == 2 ) {
+                                    mo = jsd.localizations.Months[strLoc][i];
+                                } else {
+                                    mo = jsd.localizations.MonthAbbr[strLoc][i];
+                                }
+                                re = new RegExp("^" + mo);
+                                if ( strValue.match(re)) {
+                                    mVal = i;
+                                    break;
+                                }
+                            }
+                            if ( mVal != '' ) {
+                                oDate[f](mVal);
+                            }
                         }
                 }
             }
