@@ -33,8 +33,8 @@
  *
  * Current formatting options (option are case sensitive):
  * toFormat fromFormat Option
- *   [x]       [ ]     yy - 4 digit representation of the year
- *   [x]       [ ]     y - 2 digit representation of the year
+ *   [x]       [x]     yy - 4 digit representation of the year
+ *   [x]       [x]     y - 2 digit representation of the year
  *   [x]       [ ]     mm - digit representation of the month (with leading zeros)
  *   [x]       [ ]     m - digit representation of the month (without leading zeros)
  *   [x]       [ ]     MM - full text name of the month
@@ -268,7 +268,7 @@ Date.prototype.toFormat = function(strFormat) {
  */
 Date.fromFormat = function(strValue, strFormat) {
     var oDate = new Date(),
-        jsd = this.jsDateFormat,
+        jsd = oDate.jsDateFormat,
         strLoc = jsd.localization || jsd.localizations['default'],
         chPrev = '',
         iCharCount = 0,
@@ -281,9 +281,24 @@ Date.fromFormat = function(strValue, strFormat) {
         }
         else {
             f = jsd.getFunc(chPrev, 'write');
-            if( chPrev != '' && typeof f == 'function' ) {
+            if( chPrev != '' && typeof oDate[f] == 'function' ) {
                 switch (chPrev) {
-                    
+                    case 'y':
+                        if( iCharCount == 2 ) {
+                            mVal = strValue.substr(0,4);
+                            strValue = strValue.substr(4);
+                            oDate[f](mVal);
+                            break;
+                        } else if ( iCharCount == 1 ) {
+                            mVal = strValue.substr(0,2);
+                            strValue = strValue.substr(2);
+                            if( mVal < 30 )
+                                mVal = '20' + mVal;
+                            else
+                                mVal = '19' + mVal;
+                            oDate[f](mVal);
+                            break;
+                        }
                 }
             }
             chPrev = strFormat.charAt(i);
