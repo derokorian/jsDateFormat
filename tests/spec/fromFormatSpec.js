@@ -37,8 +37,8 @@ describe('fromFormat', function() {
         d = Date.fromFormat('07', 'dd');
         expect(d.toFormat('dd')).toEqual('07');
         
-        d = Date.fromFormat('25', 'd');
-        expect(d.toFormat('d')).toEqual('25');
+        d = Date.fromFormat('21', 'd');
+        expect(d.toFormat('d')).toEqual('21');
     });
     
     it('can set the hours', function() {
@@ -65,7 +65,7 @@ describe('fromFormat', function() {
     
     it('can set the seconds', function() {
         d = Date.fromFormat('07', 'ss');
-        expect(d.toFormat('s')).toEqual('07');
+        expect(d.toFormat('ss')).toEqual('07');
         
         d = Date.fromFormat('25', 's');
         expect(d.toFormat('s')).toEqual('25');

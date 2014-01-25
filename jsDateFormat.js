@@ -4,7 +4,7 @@
  * @description provides functionality to control formatting with a Date object
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 2.0.0-alpha.2
+ * @version 2.0.0-beta.1
  * @license The MIT License (MIT)
  *
  *
@@ -329,11 +329,27 @@ Date.fromFormat = function(strValue, strFormat) {
                                 re = new RegExp("^" + mo);
                                 if ( strValue.match(re)) {
                                     mVal = i;
+                                    strValue = strValue.substr(mo.length);
                                     break;
                                 }
                             }
                             if ( mVal != '' ) {
                                 oDate[f](mVal);
+                                break;
+                            }
+                        }
+                    case 'd':
+                        if ( iCharCount == 2 ) {
+                            mVal = parseInt(strValue.substr(0,2), 10);
+                            strValue = strValue.substr(2);
+                            oDate[f](mVal);
+                            break;
+                        } else if ( iCharCount == 1 ) {
+                            mVal = strValue.match(/^3[0-1]|[1-2][0-9]|[0-9]/);
+                            if ( mVal !== null ) {
+                                strVal = strValue.substr(mVal.length);
+                                oDate[f](mVal);
+                                break;
                             }
                         }
                 }
