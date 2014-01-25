@@ -352,6 +352,62 @@ Date.fromFormat = function(strValue, strFormat) {
                                 break;
                             }
                         }
+                    case 'H':
+                        if ( iCharCount == 2 ) {
+                            mVal = parseInt(strValue.substr(0,2), 10);
+                            strValue = strValue.substr(2);
+                            oDate[f](mVal);
+                            break;
+                        } else if ( iCharCount == 1 ) {
+                            mVal = strValue.match(/^2[0-3]|1[0-9]|[0-9]/);
+                            if ( mVal !== null ) {
+                                strValue = strValue.substr(mVal.length);
+                                oDate[f](mVal);
+                                break;
+                            }
+                        }
+                    case 'h':
+                        if ( iCharCount == 2 ) {
+                            mVal = parseInt(strValue.substr(0,2), 10);
+                            strValue = strValue.substr(2);
+                            oDate[f](mVal);
+                            break;
+                        } else if ( iCharCount == 1 ) {
+                            mVal = strValue.match(/^1[0-2]|[1-9]/);
+                            if ( mVal !== null ) {
+                                strValue = strValue.substr(mVal.length);
+                                oDate[f](mVal);
+                                break;
+                            }
+                        }
+                    case 'n':
+                        if ( iCharCount == 2 ) {
+                            mVal = parseInt(strValue.substr(0,2), 10);
+                            strValue = strValue.substr(2);
+                            oDate[f](mVal);
+                            break;
+                        } else if ( iCharCount == 1 ) {
+                            mVal = strValue.match(/^[1-5][0-9]|[0-9]/);
+                            if ( mVal !== null ) {
+                                strValue = strValue.substr(mVal.length);
+                                oDate[f](mVal);
+                                break;
+                            }
+                        }
+                    case 's':
+                        if ( iCharCount == 2 ) {
+                            mVal = parseInt(strValue.substr(0,2), 10);
+                            strValue = strValue.substr(2);
+                            oDate[f](mVal);
+                            break;
+                        } else if ( iCharCount == 1 ) {
+                            mVal = strValue.match(/^[1-5][0-9]|[0-9]/);
+                            if ( mVal !== null ) {
+                                strValue = strValue.substr(mVal.length);
+                                oDate[f](mVal);
+                                break;
+                            }
+                        }
                 }
             }
             chPrev = strFormat.charAt(i);
