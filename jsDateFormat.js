@@ -108,8 +108,9 @@ Date.prototype.jsDateFormat = {
             (iTZHr < 10 ? '0' : '') + iTZHr +
             (iTZMin < 10 ? '0' : '') + iTZMin;
     },
-    getFunc: function(str, read) {
-        var strRetVal = read ? 'get' : 'set';
+    getFunc: function(str, type) {
+        var strRetVal = type == 'read' ? 'get' :
+                        type == 'write' ? 'set' : '';
         switch(str) {
             case 'y':
                 strRetVal += 'FullYear';
@@ -122,7 +123,11 @@ Date.prototype.jsDateFormat = {
                 strRetVal += 'Date';
                 break;
             case 'D':
-                strRetVal += 'Day';
+                if (type == 'read') {
+                    strRetVal += 'Day';
+                } else {
+                    strRetVal = '';
+                }
                 break;
             case 'H':
             case 'h':
@@ -176,7 +181,7 @@ Date.prototype.toFormat = function(strFormat) {
         }
         else {
             if( chPrev != '' ) {
-                f = jsd.getFunc(chPrev, true);
+                f = jsd.getFunc(chPrev, 'read');
                 if ( typeof this[f] == 'function') {
                     mVal = this[f]();
                 }
@@ -262,8 +267,29 @@ Date.prototype.toFormat = function(strFormat) {
  * @returns Date The date object, whose values are set to what was passed in
  */
 Date.fromFormat = function(strValue, strFormat) {
-    var oDate = new Date();
-    // parseFormat here
+    var oDate = new Date(),
+        jsd = this.jsDateFormat,
+        strLoc = jsd.localization || jsd.localizations['default'],
+        chPrev = '',
+        iCharCount = 0,
+        i,
+        mVal,
+        f;
+    for ( i = 0; i <= strFormat.length; i++) {
+        if (strFormat.charAt(i) == chPrev) {
+            iCharCount++;
+        }
+        else {
+            f = jsd.getFunc(chPrev, 'write');
+            if( chPrev != '' && typeof f == 'function' ) {
+                switch (chPrev) {
+                    
+                }
+            }
+            chPrev = strFormat.charAt(i);
+            iCharCount = 1;
+        }
+    }
     return oDate;
 };
 

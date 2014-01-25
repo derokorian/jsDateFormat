@@ -9,7 +9,7 @@ describe('fromFormat', function() {
         expect(typeof Date.fromFormat).toBe('function');
     });
     
-    xit('can create date from format', function() {
+    it('can create date from format', function() {
         var strDate = '2012-04-04 19:05:07';
         var strFormat = 'yy-mm-dd HH:nn:ss';
         
