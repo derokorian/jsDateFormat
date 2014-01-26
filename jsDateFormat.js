@@ -4,7 +4,7 @@
  * @description provides functionality to control formatting with a Date object
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 2.0.0
+ * @version 2.0.1
  * @license The MIT License (MIT)
  *
  *
@@ -349,8 +349,14 @@ Date.fromFormat = function(strValue, strFormat) {
                                 if ( mVal == 'pm' && oDate.getHours() < 12 ) {
                                     oDate.setHours(oDate.getHours() + 12);
                                     break;
-                                } else if ( mVal == 'am' && oDate.getHours() > 11 ) {
+                                } else if ( mVal == 'pm' && oDate.getHours() == 12 ) {
+                                    oDate.setHours(0);
+                                    break;
+                                } else if ( mVal == 'am' && oDate.getHours() > 12 ) {
                                     oDate.setHours(oDate.getHours() - 12);
+                                    break;
+                                } else if ( mVal == 'am' && oDate.getHours() == 0 ) {
+                                    oDate.setHours(12);
                                     break;
                                 }
                             }
