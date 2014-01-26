@@ -3,13 +3,57 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <!-- CSS -->
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="css/jasmine.css">
+    <!-- JS -->
+    <script type="text/javascript" src="js/jasmine.js"></script>
+    <script type="text/javascript" src="js/jasmine-html.js"></script>
+  
+    <!-- include source files here... -->
+    <script type="text/javascript" src="js/jsDateFormat.min.js"></script>
+    
+    <!-- include spec files here... -->
+    <script type="text/javascript" src="js/jsDateSpec.js"></script>
+    <script type="text/javascript" src="js/toFormatSpec.js"></script>
+    <script type="text/javascript" src="js/fromFormatSpec.js"></script>
+
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    
+    <script type="text/javascript">
+    (function() {
+      var jasmineEnv = jasmine.getEnv();
+      jasmineEnv.updateInterval = 1000;
+
+      var htmlReporter = new jasmine.HtmlReporter();
+
+      jasmineEnv.addReporter(htmlReporter);
+
+      jasmineEnv.specFilter = function(spec) {
+        return htmlReporter.specFilter(spec);
+      };
+
+      var currentWindowOnload = window.onload;
+
+      window.onload = function() {
+        if (currentWindowOnload) {
+          currentWindowOnload();
+        }
+        execJasmine();
+      };
+
+      function execJasmine() {
+        jasmineEnv.execute();
+      }
+
+    })();
+  </script>
+    
     <title>jsDateFormat by derokorian</title>
   </head>
 
@@ -35,7 +79,7 @@
 <a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h3>
 
 <p>jsDateFormat provides an extension for the Date prototype, which allows formatting the output based on a template.</p>
-
+<p><a href="https://travis-ci.org/derokorian/jsDateFormat"><img src="https://travis-ci.org/derokorian/jsDateFormat.png?branch=master" alt="Build Status" style="max-width:100%;"></a></p>
 <h2>
 <a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
 
@@ -75,6 +119,10 @@ oDate = Date.fromFormat('18:17', 'H:nn'); // Produces an object set to today's d
 
 <p>en - English<br>
 es - Spanish</p>
+
+<h2><a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h2>
+<p>See below for results of jasmine tests for v2.0.1</p>
+
         </section>
 
         <footer>
