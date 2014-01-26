@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <!-- CSS -->
     <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="css/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="css/pygment_trac.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="css/print.css" media="print"/>
     <link rel="stylesheet" type="text/css" href="css/jasmine.css">
+    <link rel="stylesheet" type="text/css" href="css/options.css">
     <!-- JS -->
     <script type="text/javascript" src="js/jasmine.js"></script>
     <script type="text/javascript" src="js/jasmine-html.js"></script>
-  
+    <script type="text/javascript" src="js/options.js"></script>
+
     <!-- include source files here... -->
     <script type="text/javascript" src="js/jsDateFormat.min.js"></script>
-    
+
     <!-- include spec files here... -->
     <script type="text/javascript" src="js/jsDateSpec.js"></script>
     <script type="text/javascript" src="js/toFormatSpec.js"></script>
@@ -24,64 +26,74 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    
+
     <script type="text/javascript">
-    (function() {
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 1000;
+        (function () {
+            var jasmineEnv = jasmine.getEnv();
+            jasmineEnv.updateInterval = 1000;
 
-      var htmlReporter = new jasmine.HtmlReporter();
+            var htmlReporter = new jasmine.HtmlReporter();
 
-      jasmineEnv.addReporter(htmlReporter);
+            jasmineEnv.addReporter(htmlReporter);
 
-      jasmineEnv.specFilter = function(spec) {
-        return htmlReporter.specFilter(spec);
-      };
+            jasmineEnv.specFilter = function (spec) {
+                return htmlReporter.specFilter(spec);
+            };
 
-      var currentWindowOnload = window.onload;
+            var currentWindowOnload = window.onload;
 
-      window.onload = function() {
-        if (currentWindowOnload) {
-          currentWindowOnload();
-        }
-        execJasmine();
-      };
+            window.onload = function () {
+                if (currentWindowOnload) {
+                    currentWindowOnload();
+                }
+                execJasmine();
+            };
 
-      function execJasmine() {
-        jasmineEnv.execute();
-      }
+            function execJasmine() {
+                jasmineEnv.execute();
+            }
 
-    })();
-  </script>
-    
+        })();
+    </script>
+
     <title>jsDateFormat by derokorian</title>
-  </head>
+</head>
 
-  <body>
-    <div id="container">
-      <div class="inner">
+<body>
+<div id="container">
+    <div class="inner">
 
         <header>
-          <h1>jsDateFormat</h1>
-          <h2>A javascript extension for the Date prototype to provide output format functionality.</h2>
+            <h1>jsDateFormat</h1>
+
+            <h2>A javascript extension for the Date prototype to provide output format functionality.</h2>
         </header>
 
         <section id="downloads" class="clearfix">
-          <a href="https://github.com/derokorian/jsDateFormat/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/derokorian/jsDateFormat/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/derokorian/jsDateFormat" id="view-on-github" class="button"><span>View on GitHub</span></a>
+            <a href="https://github.com/derokorian/jsDateFormat/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+            <a href="https://github.com/derokorian/jsDateFormat/tarball/master" id="download-tar-gz"
+               class="button"><span>Download .tar.gz</span></a>
+            <a href="https://github.com/derokorian/jsDateFormat" id="view-on-github"
+               class="button"><span>View on GitHub</span></a>
         </section>
 
         <hr>
 
         <section id="main_content">
-          <h3>
-<a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview</h3>
+            <h3>
+                <a name="overview" class="anchor" href="#overview"><span class="octicon octicon-link"></span></a>Overview
+            </h3>
 
-<p>jsDateFormat provides an extension for the Date prototype, which allows formatting the output based on a template.</p>
-<p><a href="https://travis-ci.org/derokorian/jsDateFormat"><img src="https://travis-ci.org/derokorian/jsDateFormat.png?branch=master" alt="Build Status" style="max-width:100%;"></a></p>
-<h2>
-<a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples</h2>
+            <p>jsDateFormat provides an extension for the Date prototype, which allows formatting the output based on a
+                template.</p>
+
+            <p><a href="https://travis-ci.org/derokorian/jsDateFormat"><img
+                    src="https://travis-ci.org/derokorian/jsDateFormat.png?branch=master" alt="Build Status"
+                    style="max-width:100%;"></a></p>
+
+            <h2>
+                <a name="examples" class="anchor" href="#examples"><span class="octicon octicon-link"></span></a>Examples
+            </h2>
 
 <pre><code>var oDate = new Date();
 alert(oDate.toFormat('d M, yy'); // produces '2 December, 2013'
@@ -89,59 +101,60 @@ alert(oDate.toFormat('H:nn'); // produces '18:17'
 oDate = Date.fromFormat('18:17', 'H:nn'); // Produces an object set to today's date and 18:17 for time.
 </code></pre>
 
-<hr><h2>
-<a name="template-strings" class="anchor" href="#template-strings"><span class="octicon octicon-link"></span></a>Template strings</h2>
+            <hr>
+            <h2>
+                <a name="template-strings" class="anchor" href="#template-strings"><span
+                        class="octicon octicon-link"></span></a>Template strings</h2>
+                <table id="options-table">
+                    <tr>
+                        <th>
+                            Option
+                        </th>
+                        <th>
+                            toFormat Support
+                        </th>
+                        <th>
+                            fromFormat Support
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                    </tr>
+                </table>
+            <br>
+            <h2>
+                <a name="supported-localizations" class="anchor" href="#supported-localizations"><span
+                        class="octicon octicon-link"></span></a>Supported Localizations</h2>
 
-<ul>
-<li>   yy - 4 digit representation of the year</li>
-<li>   y - 2 digit representation of the year</li>
-<li>   mm - digit representation of the month (with leading zeros)</li>
-<li>   m - digit representation of the month (without leading zeros)</li>
-<li>   MM - full text name of the month</li>
-<li>   M - short text name of the month</li>
-<li>   DD - full text name of the day</li>
-<li>   D - short text name of the day</li>
-<li>   dd - digit representation of the month (with leading zeros)</li>
-<li>   d - digit representation of the month (without leading zeros)</li>
-<li>   HH - Hours in 24 hour format (with leading zeros)</li>
-<li>   H - Hours in 24 hour format (without leading zeros)</li>
-<li>   hh - Hours in 12 hour format (with leading zeros)</li>
-<li>   h - hours in 12 hour format (without leading zeros)</li>
-<li>   nn - Minutes (with leading zeros)</li>
-<li>   n - Minutes (without leading zeros)</li>
-<li>   ss - Seconds (with leading zeros)</li>
-<li>   s - Seconds (without leading zeros)</li>
-<li>   j - 12 hour section lowercase (am/pm)</li>
-<li>   J - 12 hour seciton uppercase (AM/PM)</li>
-<li>   z - Timezone as offset from UTC</li>
-</ul><h2>
-<a name="supported-localizations" class="anchor" href="#supported-localizations"><span class="octicon octicon-link"></span></a>Supported Localizations</h2>
+            <p>en - English<br>
+                es - Spanish</p>
+<br>
+            <h2><a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h2>
 
-<p>en - English<br>
-es - Spanish</p>
-
-<h2><a name="tests" class="anchor" href="#tests"><span class="octicon octicon-link"></span></a>Tests</h2>
-<p>See below for results of jasmine tests for v2.0.1</p>
+            <p>See below for results of jasmine tests for v2.0.1</p>
 
         </section>
 
         <footer>
-          jsDateFormat is maintained by <a href="https://github.com/derokorian">derokorian</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+            jsDateFormat is maintained by <a href="https://github.com/derokorian">derokorian</a><br>
+            This page was originally generated by <a href="http://pages.github.com">GitHub Pages</a>.
+            Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+            It has been updated by ?<a href="https://github.com/derokorian">derokorian</a>.
         </footer>
 
-                  <script type="text/javascript">
+        <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
+        </script>
+        <script type="text/javascript">
             try {
-              var pageTracker = _gat._getTracker("UA-19226370-3");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
+                var pageTracker = _gat._getTracker("UA-19226370-3");
+                pageTracker._trackPageview();
+            } catch (err) {
+            }
+        </script>
 
-      </div>
     </div>
-  </body>
+</div>
+</body>
 </html>
