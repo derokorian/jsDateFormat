@@ -78,8 +78,30 @@ describe('fromFormat', function() {
         d = Date.fromFormat('pm', 'j');
         expect(d.toFormat('j')).toEqual('pm');
         
+        d = Date.fromFormat('am', 'j');
+        expect(d.toFormat('j')).toEqual('am');
+        
+        for( var i = 10; i < 13; i++ ) {
+            d = Date.fromFormat(i+'pm', 'hj');
+            expect(d.getHours()).toEqual(i < 12 ? i + 12 : i);
+            
+            d = Date.fromFormat(i+'am', 'hj');
+            expect(d.getHours()).toEqual(i < 12 ? i : 0);
+        }
+        
         d = Date.fromFormat('AM', 'J');
         expect(d.toFormat('J')).toEqual('AM');
+        
+        d = Date.fromFormat('PM', 'J');
+        expect(d.toFormat('J')).toEqual('PM');
+        
+        for( var i = 10; i < 13; i++ ) {
+            d = Date.fromFormat(i+'PM', 'hJ');
+            expect(d.getHours()).toEqual(i < 12 ? i + 12 : i);
+            
+            d = Date.fromFormat(i+'AM', 'hJ');
+            expect(d.getHours()).toEqual(i < 12 ? i : 0);
+        }
     });
     
     it('can create a full date from format', function() {

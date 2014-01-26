@@ -4,7 +4,7 @@
  * @description provides functionality to control formatting with a Date object
  *
  * @author Ryan Pallas <ryan.pallas (at) gmail.com>
- * @version 2.0.0
+ * @version 2.0.1
  * @license The MIT License (MIT)
  *
  *
@@ -233,12 +233,12 @@ Date.prototype.toFormat = function(strFormat) {
                             }
                         case 'j':
                             if (iCharCount == 1) {
-                                strRetVal += mVal > 0 && mVal < 13 ? 'am' : 'pm';
+                                strRetVal += mVal < 12 ? 'am' : 'pm';
                                 break;
                             }
                         case 'J':
                             if (iCharCount == 1) {
-                                strRetVal += mVal > 0 && mVal < 13 ? 'AM' : 'PM';
+                                strRetVal += mVal < 12 ? 'AM' : 'PM';
                                 break;
                             }
                         case 'z':
@@ -305,6 +305,9 @@ Date.fromFormat = function(strValue, strFormat) {
                     } else {
                         mVal = strValue.match(/^[1-5][0-9]|[0-9]/);
                     }
+                    if ( typeof mVal[0] != 'undefined' ) {
+                        mVal = mVal[0];
+                    }
                     strValue = strValue.substr(mVal.length);
                     if ( chPrev == 'm' ) {
                         mVal--;
@@ -349,7 +352,7 @@ Date.fromFormat = function(strValue, strFormat) {
                                 if ( mVal == 'pm' && oDate.getHours() < 12 ) {
                                     oDate.setHours(oDate.getHours() + 12);
                                     break;
-                                } else if ( mVal == 'am' && oDate.getHours() > 11 ) {
+                                } else if ( mVal == 'am' && oDate.getHours() >= 12 ) {
                                     oDate.setHours(oDate.getHours() - 12);
                                     break;
                                 }
